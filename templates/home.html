@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+{% block content %}
+<h1>This is the homepage</h1>      
+<div class="date">
+    <h2>The date is: </h2>
+    <p>Date: {{ date }}</p>
+    <p>Time: {{ time }}</p>
+
+    <p><a href="/about">About us</a></p>
+</div>
+{% endblock %}

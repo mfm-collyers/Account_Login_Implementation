@@ -1,0 +1,27 @@
+{% extends "base.html" %} {% block title %}Products{% endblock %} {% block
+content %}
+<h1>Products</h1>
+<h3>
+  Browse our extensive range of incredible products. Visit in store to purchase.
+</h3>
+<div class="productList">
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+      <tr>
+        <td>{{ product[1] }}</td>
+        <td>{{ product[2] }}</td>
+        <td>£{{ product[3] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
