@@ -23,8 +23,23 @@
         <li><a href="{{ url_for('booking') }}">Booking</a></li>
         <li><a href="{{ url_for('products') }}">Products</a></li>
         <li><a href="{{ url_for('weather') }}">Weather</a></li>
+        <div class="auth-links">
+          {% if current_user.is_authenticated %}
+          <li><a href="{{ url_for('logout') }}">Logout</a></li>
+          {% else %}
+          <li><a href="{{ url_for('login') }}">Login</a></li>
+          {% endif %}
+        </div>
       </ul>
     </nav>
-    <div class="content">{% block content %}{% endblock %}</div>
+    <div class="content">
+      {% with messages = get_flashed_messages() %} {% if messages %}
+      <ul class="flashes">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %} {% endwith %} {% block content %}{% endblock %}
+    </div>
   </body>
 </html>
