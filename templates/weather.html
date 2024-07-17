@@ -1,0 +1,16 @@
+{% extends "base.html" %} {% block title %}Weather{% endblock %} {% block
+content %}
+<h1>The weather today</h1>
+<h3>
+  Not sure what this has to do with coffee... But this is a great example of an API implementation!
+</h3>
+<div class="weather">
+  <!-- We have passed the weather_data into this page via the render_template call as an additional argument.
+  This allows us to access the data in our HTML file using double curcly brackets to escape from HTML and use the variable as we would in Python-->
+  <p>Location: {{ weather_data['location'] }}</p>
+  <p>Temperature: {{ weather_data['temperature'] }}</p>
+  <!-- We can even escape HTML in the middle of an attribute to set the image file location dynamically -->
+  <p>We are experiencing: {{ weather_data['condition']['text'] }}</p> <img src="{{ weather_data['condition']['icon'] }}"></img>
+  <p>Wind speed: {{ weather_data['wind'] }} </p>
+</div>
+{% endblock %}

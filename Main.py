@@ -1,6 +1,7 @@
 from flask import Flask, render_template #Flask library and functions
 import sqlite3 #Our database
 import datetime #Used to display current date & time
+import requests #Used for API calls
 
 #Instantiate Flask App
 app = Flask(__name__)
@@ -32,6 +33,28 @@ def getProducts():
     print(products)
     return products
 
+#Function accessing weather API at https://www.weatherapi.com/
+def get_weather():
+    try:
+        API_KEY = 'a627aa23eb5e4fd3954133600242102'
+        LOCATION = 'Horsham'
+        response = requests.get(f'http://api.weatherapi.com/v1/current.json?key={API_KEY}&q={LOCATION}&aqi=no')
+        response.raise_for_status() #Will generate an error if there is a problem with our API call.
+
+        json = response.json()
+
+        weather_data = { #Extract the data from the JSON we received into a dictionary so we can use it later.
+            'location': json['location']['name'],
+            'temperature': json['current']['temp_c'],
+            'condition': json['current']['condition'],
+            'wind': json['current']['wind_mph']
+        }
+
+        return weather_data
+
+    except requests.RequestException as err:
+        return {'error fetching weather': str(err)}
+
 #Starting (index) page
 @app.route('/')
 @app.route('/home')
@@ -51,6 +74,10 @@ def booking():
 def products():
     products = getProducts()
     return render_template('products.html', products = products)
+
+@app.route('/weather')
+def weather():
+    return render_template('weather.html', weather_data = get_weather())
 
 #Run in debug mode.
 if __name__ == '__main__':
